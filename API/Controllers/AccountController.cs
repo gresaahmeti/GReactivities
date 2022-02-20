@@ -24,6 +24,7 @@ namespace API.Controllers
             _tokenService = tokenService;
             _userManager = userManager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
     [HttpPost("login")]
 
@@ -47,10 +48,12 @@ namespace API.Controllers
     {
         if (await _userManager.Users.AnyAsync( x=> x.Email == registerDto.Email))
         {
-            return BadRequest ("Email Token");
+            ModelState.AddModelError( "email", "Email taken");
+            return BadRequest (ModelState);
         }
          if (await _userManager.Users.AnyAsync( x=> x.UserName == registerDto.Username))
         {
+            ModelState.AddModelError("username", "Username taken");
             return BadRequest ("username Token");
         }
 
@@ -81,11 +84,11 @@ namespace API.Controllers
     {
         
             return new UserDto
-         {
+            {
                 DisplayName = user.DisplayName,
-                Image = null,
+                Image = null,               
                 Token = _tokenService.CreateToken(user),
-                Username =user.UserName
+                Username =user.UserName,
             };
     }
 
