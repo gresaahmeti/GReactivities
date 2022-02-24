@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { Activity } from "../models/activity";
+import {Travel} from "../models/travel"
 import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 
@@ -79,6 +80,13 @@ const Activities = {
     update: (activity: Activity) => axios.put <void>(`/activities/${activity.id}`, activity),
     delete: (id: string) => axios.delete <void>(`/activities/${id}`)
 }
+const Travelies = {
+    list: () => requests.get <Travel[]> ('/travelies'),
+    details: (id: string) => requests.get<Travel>(`/travelies/${id}`),
+    create: (travel: Travel) => axios.post<void>('/travelies', travel),
+    update: (travel: Travel) => axios.put <void>(`/travelies/${travel.id}`, travel),
+    delete: (id: string) => axios.delete <void>(`/travelies/${id}`)
+}
 
 const Account ={
     current: () => requests.get<User> ('/account'),
@@ -88,7 +96,8 @@ const Account ={
 
 const agent ={
     Activities,
-    Account
+    Account, 
+    Travelies
 }
 
 export default agent;

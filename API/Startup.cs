@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Extensions;
 using API.Middleware;
 using Application.Activities;
+using Application.Travelies;
 using Application.Core;
 using AutoMapper;
 using FluentValidation.AspNetCore;
