@@ -20,6 +20,9 @@ export default observer ( function HomePage() {
                     <Button as={Link} to='/activities' size='huge' inverted>
                     Go to Activities!
                     </Button>
+                    <Button as={Link} to='/travelies' size='huge' inverted>
+                    Go to Travels!
+                    </Button>
                     </>
                 ) : (
                     <>
