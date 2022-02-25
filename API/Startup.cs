@@ -6,6 +6,7 @@ using API.Extensions;
 using API.Middleware;
 using Application.Activities;
 using Application.Travelies;
+using Application.Photoies;
 using Application.Core;
 using AutoMapper;
 using FluentValidation.AspNetCore;
@@ -48,7 +49,7 @@ namespace API
             })
             .AddFluentValidation (config => 
             {
-                config.RegisterValidatorsFromAssemblyContaining <Create>();
+                config.RegisterValidatorsFromAssemblyContaining <CreateT>();
             });
             services.AddApplicationServices(_config);
             services.AddIdentityServices (_config);

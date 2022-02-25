@@ -12,6 +12,6 @@ namespace Persistence
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Travel> Travelies { get; set; }
 
-       
+       public DbSet <Photo> Photoies {get; set; }
     }
 }

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { history } from "../..";
 import { Activity } from "../models/activity";
 import {Travel} from "../models/travel"
+import { Photo } from "../models/photo";
 import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/store";
 
@@ -80,12 +81,21 @@ const Activities = {
     update: (activity: Activity) => axios.put <void>(`/activities/${activity.id}`, activity),
     delete: (id: string) => axios.delete <void>(`/activities/${id}`)
 }
+
 const Travelies = {
     list: () => requests.get <Travel[]> ('/travelies'),
     details: (id: string) => requests.get<Travel>(`/travelies/${id}`),
     create: (travel: Travel) => axios.post<void>('/travelies', travel),
     update: (travel: Travel) => axios.put <void>(`/travelies/${travel.id}`, travel),
     delete: (id: string) => axios.delete <void>(`/travelies/${id}`)
+}
+
+const Photoies = {
+    list: () => requests.get <Photo[]> ('/photoies'),
+    details: (id: string) => requests.get<Photo>(`/photoies/${id}`),
+    create: (photo: Photo) => axios.post<void>('/photoies', photo),
+    update: (photo: Photo) => axios.put <void>(`/photoies/${photo.id}`, photo),
+    delete: (id: string) => axios.delete <void>(`/photoies/${id}`)
 }
 
 const Account ={
@@ -97,7 +107,8 @@ const Account ={
 const agent ={
     Activities,
     Account, 
-    Travelies
+    Travelies,
+    Photoies
 }
 
 export default agent;

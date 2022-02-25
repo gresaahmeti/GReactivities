@@ -17,10 +17,13 @@ export default observer (function NavBar() {
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/activities' name='Activities'/>
                 <Menu.Item as={NavLink} to='/travelies' name='Travels'/>
+                <Menu.Item as={NavLink} to='/photoies' name='Photo'/>
+
                 <Menu.Item as={NavLink} to='/errors' name='Errors'/>
                 <Menu.Item>
                     <Button as={NavLink} to='/createActivity' positive content='Create Activity'/>
                     <Button as={NavLink} to='/createTravel' positive content='Create Travel'/>
+                    <Button as={NavLink} to='/createPhoto' positive content='Add Photo'/>
                 </Menu.Item>    
                 <Menu.Item position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar spaced = 'right' /> 

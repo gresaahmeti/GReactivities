@@ -8,74 +8,76 @@ import { v4 as uuid } from 'uuid';
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 import MyTextInput from "../../../app/common/form/MyTextInput";
-import MyTextArea from "./MyTextAreaT";
-import MySelectInput from "./MySelectInputT";
+import MyTextArea from "./MyTextAreaP";
+import MySelectInput from "./MySelectInputP";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
-import { Travel } from "../../../app/models/travel";
+import { Photo } from "../../../app/models/photo";
 
-export default observer ( function TravelForm() {
+export default observer ( function PhotoForm() {
     const history = useHistory ();
-    const {travelStore} = useStore ();
-    const { createTravel, updateTravel,
-         loading, loadTravel, loadingInitial} = travelStore;
+    const {photoStore} = useStore ();
+    const { createPhoto, updatePhoto,
+         loading, loadPhoto, loadingInitial} = photoStore;
     const {id} = useParams<{id: string}> ();
 
-    const [travel, setTravel] = useState <Travel> ({
+    const [photo, setPhoto] = useState <Photo> ({
         id: '',
         title: '',
-      //  category: '',
+        category: '',
         description:'',
         date:null,
         city: '',
-      //  venue:''
+        venue:''
     });
 
     const validationSchema = Yup.object ({
-        title: Yup.string().required('The travel title is required'),
-        description: Yup.string().required('The travel description is required'),
-      //  category: Yup.string().required(),
+        title: Yup.string().required('The photo title is required'),
+        description: Yup.string().required('The photo description is required'),
+        category: Yup.string().required(),
         date: Yup.string().required('Date is required').nullable(),
-      //  venue: Yup.string().required(),
+        venue: Yup.string().required(),
         city: Yup.string().required(),
     })
 
     useEffect (() => {
-        if (id) loadTravel (id). then(travel => setTravel(travel!))
-    }, [id, loadTravel]);
+        if (id) loadPhoto (id). then(photo => setPhoto(photo!))
+    }, [id, loadPhoto]);
 
    
-    function handleFormSubmit(travel: Travel) {
-     if( travel.id.length ===0 ) {
-           let newTravel = {
-               ...travel,
+    function handleFormSubmit(photo: Photo) {
+     if( photo.id.length ===0 ) {
+           let newPhoto = {
+               ...photo,
                id: uuid ()
            };
-           createTravel(newTravel).then (() => history.push(`/travelies/${newTravel.id}`))
+           createPhoto (newPhoto).then (() => history.push(`/photoies/${newPhoto.id}`))
        } else {
-           updateTravel(travel).then (() => history.push(`/travelies/${travel.id}`))
+           updatePhoto(photo).then (() => history.push(`/photoies/${photo.id}`))
        }
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value}= event.target;
-        setTravel({...travel, [name]:value})
+        setPhoto({...photo, [name]:value})
     } 
 
-    if (loadingInitial) return <LoadingComponent content='Loading travel ...'/>
+    if (loadingInitial) return <LoadingComponent content='Loading photo ...'/>
 
     return(
         <Segment clearing>
-            <Header content ='Travel Details' sub color='teal'/>
+            <Header content ='Photo Details' sub color='teal'/>
             <Formik
             validationSchema={validationSchema}
              enableReinitialize
-              initialValues={travel}
+              initialValues={photo}
                onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty}) => (        
             <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+
             <MyTextInput placeholder='Title' name='title' />
             <MyTextArea rows={3} placeholder='Description'  name='description'/>
+            <MySelectInput options={categoryOptions} placeholder='Category' name='category' />
             <MyDateInput
              placeholderText='Date'
                name='date'
@@ -85,12 +87,12 @@ export default observer ( function TravelForm() {
                />
                <Header content='LocationDetails' sub color='teal' />
             <MyTextInput placeholder='City'  name='city' />
-           
+            <MyTextInput placeholder='Venue' name='venue' />
             <Button 
             disabled={isSubmitting || !dirty || !isValid}
             loading={loading} floated='right'
              positive type='submit' content='Submit'/>
-            <Button as={Link} to='/travelies' floated='right' type='button' content='Cancel' />
+            <Button as={Link} to='/photoies' floated='right' type='button' content='Cancel' />
         </Form>
                 )}
             </Formik>
